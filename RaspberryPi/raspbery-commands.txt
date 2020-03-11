@@ -1,0 +1,82 @@
+https://medium.freecodecamp.org/how-to-make-your-own-python-dev-server-with-raspberry-pi-37651156379f
+1. login to pi
+ssh -R 52698:127.0.0.1:52698 pi@192.168.1.60
+
+sudo apt-get install python3-flask
+cd /var/www/
+sudo mkdir homeapi
+sudo chown -R pi homeapi
+touch app.py
+
+install rmate 
+https://github.com/aurora/rmate
+
+sudo wget -O /usr/local/bin/rmate https://raw.githubusercontent.com/aurora/rmate/master/rmate
+sudo chmod a+x /usr/local/bin/rmate
+
+
+rmate -p 52698 app.py
+
+sudo shutdown -r now
+
+# install VNC
+# http://wiki.amperka.ru/rpi:vnc-server
+
+sudo apt-get install realvnc-vnc-server realvnc-vnc-viewer
+sudo raspi-config
+# Зайдите в пункт меню: Interfacing Options VNC и подтвердите включение VNC кнопкой YES
+# Запустите VNC-сервер.
+vncserver
+
+#  VNC Server catchphrase: "Torpedo Edward virus. Nothing armada passage."
+#  signature: 28-53-f4-78-6a-b6-7d-55
+
+# login to VNC (install Real VNC)
+# Install arduino IDE
+
+sudo apt-get install arduino
+
+ls /dev/tty* 
+# find /dev/ttyACM0 to locate arduino
+
+# Start VNC server
+vncserver :1 
+
+# goto server
+cd /var/www/homeapi
+rmate -p 52698 app.py
+
+# run flask app 
+
+export FLASK_APP=app.py
+
+https://gunicorn.org/
+
+-------------------------------------------------------
+# Host aspnet core app on raspberry
+#  https://thomaslevesque.com/2018/04/17/hosting-an-asp-net-core-2-application-on-a-raspberry-pi/
+# setup net core on raspberry
+# https://edi.wang/post/2019/9/29/setup-net-core-30-runtime-and-sdk-on-raspberry-pi-4 
+
+installing .net core runtime
+
+sudo apt-get update
+sudo apt-get upgrade
+
+cd $HOME/
+sudo mkdir dotnet
+cd dotnet/
+
+sudo wget https://download.visualstudio.microsoft.com/download/pr/349f13f0-400e-476c-ba10-fe284b35b932/44a5863469051c5cf103129f1423ddb8/dotnet-sdk-3.1.102-linux-arm.tar.gz
+
+sudo wget https://download.visualstudio.microsoft.com/download/pr/8ccacf09-e5eb-481b-a407-2398b08ac6ac/1cef921566cb9d1ca8c742c9c26a521c/aspnetcore-runtime-3.1.2-linux-arm.tar.gz
+
+mkdir dotnet
+mkdir aspnetcore
+tar zxf dotnet-sdk-3.1.102-linux-arm.tar.gz -C dotnet
+tar zxf aspnetcore-runtime-3.1.2-linux-arm.tar.gz -C aspnetcore
+
+export DOTNET_ROOT=$HOME/dotnet/dotnet
+export PATH=$PATH:$HOME/dotnet/dotnet
+
+# not doing anything with aspnetcore for a while
