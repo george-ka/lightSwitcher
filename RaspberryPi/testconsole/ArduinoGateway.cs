@@ -26,7 +26,7 @@ namespace ArduinoLightswitcherGateway
             var arduinoPort = portNames.FirstOrDefault(port => port.StartsWith(_arduinoGatewayConfig.SerialPortNamePrefix));
             if (arduinoPort == null)
             {
-                throw new ArduinoGatewayException($"No serial port with prefix ${_arduinoGatewayConfig.SerialPortNamePrefix} was found.");
+                throw new ArduinoGatewayException($"No serial port with prefix {_arduinoGatewayConfig.SerialPortNamePrefix} was found.");
             }
 
             _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
@@ -37,7 +37,7 @@ namespace ArduinoLightswitcherGateway
 
         public string Send(byte command)
         {
-            if (!_serialPort.IsOpen)
+            if (_serialPort == null || !_serialPort.IsOpen)
             {
                 _logger.Information("Port wasn't open. Opening...");
                 Open();

@@ -12,6 +12,7 @@ namespace testconsole
             // Get a list of serial port names.             
             
             Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .CreateLogger();
 

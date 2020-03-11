@@ -12,7 +12,7 @@ namespace ArduinoLightswitcherGateway
                 throw new ArgumentException("Gateway can't be null.", nameof(arduinoGateway));
             }
 
-            if (_lightSwitcherConfig == null)
+            if (lightSwitcherConfig == null)
             {
                 throw new ArgumentException("lightswitcher config can't be null", nameof(lightSwitcherConfig));
             }
