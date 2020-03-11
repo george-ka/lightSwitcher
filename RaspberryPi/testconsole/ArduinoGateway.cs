@@ -60,12 +60,12 @@ namespace ArduinoLightswitcherGateway
                 if (_serialPort.BytesToRead > 0)
                 {
                     bytesRed = _serialPort.Read(buffer, 0, Math.Min(_serialPort.BytesToRead, buffer.Length));
+                    var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
+                    _logger.Debug("{byte}", bufferedResponse);
+
+                    response.Append(bufferedResponse);
                 }
                 
-                var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
-                _logger.Debug("{byte}", bufferedResponse);
-
-                response.Append(bufferedResponse);
                 i++;
                 Thread.Sleep(100);
             }
