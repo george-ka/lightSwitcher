@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.IO.Ports;
 using Serilog;
+using System.Text;
+using System.Threading;
 
 namespace ArduinoLightswitcherGateway
 {
@@ -23,15 +25,15 @@ namespace ArduinoLightswitcherGateway
             var portNames = SerialPort.GetPortNames();
 
             _logger.Debug("Found ports {portNames}", portNames);
-            var arduinoPort = portNames.FirstOrDefault(port => port.StartsWith(_arduinoGatewayConfig.SerialPortNamePrefix));
+            var arduinoPort = portNames.FirstOrDefault(port => port.Contains(_arduinoGatewayConfig.SerialPortNamePrefix));
             if (arduinoPort == null)
             {
                 throw new ArduinoGatewayException($"No serial port with prefix {_arduinoGatewayConfig.SerialPortNamePrefix} was found.");
             }
 
             _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
-            _serialPort.ReadTimeout = 1500;
-            _serialPort.WriteTimeout = 1500;
+            _serialPort.ReadTimeout = 15000;
+            _serialPort.WriteTimeout = 15000;
             _serialPort.Open();
         }
 
@@ -46,9 +48,18 @@ namespace ArduinoLightswitcherGateway
             _logger.Debug("Sending command {command}", command);
             _serialPort.Write(new byte[] { command }, 0, 1);
             _logger.Debug("Waiting for a response");
-            var response = _serialPort.ReadLine();
-            _logger.Debug("Arduino response: {response}", response);
-            return response;
+
+            var i = 0;
+            var response = new StringBuilder();
+            while (i < 10000)
+            {
+                response.Append(_serialPort.ReadChar());
+                _logger.Debug("Arduino response: {response}", response);
+                i++;
+                Thread.Sleep(100);
+            }
+
+            return response.ToString();
         }
 
         public void Close()
