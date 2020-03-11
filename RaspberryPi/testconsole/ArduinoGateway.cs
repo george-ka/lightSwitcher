@@ -52,11 +52,20 @@ namespace ArduinoLightswitcherGateway
             var i = 0;
             var response = new StringBuilder();
 
+            var buffer = new byte[150];
+            var bytesRed = 0;
             _logger.Debug("Arduino response: {response}", response);
             while (i < 200)
             {
-                var responseByte = _serialPort.ReadByte();
-                _logger.Debug("{byte}", responseByte);
+                if (_serialPort.BytesToRead > 0)
+                {
+                    bytesRed = _serialPort.Read(buffer, 0, Math.Min(_serialPort.BytesToRead, buffer.Length));
+                }
+                
+                var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
+                _logger.Debug("{byte}", bufferedResponse);
+
+                response.Append(bufferedResponse);
                 i++;
                 Thread.Sleep(100);
             }
