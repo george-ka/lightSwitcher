@@ -16,24 +16,31 @@ namespace testconsole
                 .WriteTo.Console()
                 .CreateLogger();
 
-            var command = "";
-            Console.WriteLine("Print '1|0 <PIN>' or x for exit");
-
             using (var arduinoGateway = new ArduinoGateway(
                 new ArduinoGatewayConfig("ttyACM", 9600)))
             using (var lightswitcher = new LightSwitcherGateway(
                 arduinoGateway,
                 new LightSwitcherConfig(48, 97, 14)))
             {
-                while (command != "x")
+                arduinoGateway.Send(0);
+
+                var command = "";
+                Console.WriteLine("Print '1|0 <PIN>' or x for exit");
+            
+                while (true)
                 {
                     command = Console.ReadLine();
+                    if (command == "x")
+                    {
+                        break;
+                    }
+
                     var parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     var turnOn = false;
                     if (parts[0] == "1")
                     {
                         turnOn = true;
-                    }
+                    } 
                     else if (parts[0] == "0")
                     {
                         turnOn = false;
@@ -54,8 +61,6 @@ namespace testconsole
                     Console.WriteLine($"result: {result}");
                 }
             }
-            
-               
         }
     }
 }
