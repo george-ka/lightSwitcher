@@ -21,56 +21,75 @@ namespace ArduinoLightswitcherGateway
 
         public void Open()
         {
-            _logger.Debug("Opening Arduino Gateway. Searching for port with prefix {prefix}", _arduinoGatewayConfig.SerialPortNamePrefix);
-            var portNames = SerialPort.GetPortNames();
-
-            _logger.Debug("Found ports {portNames}", portNames);
-            var arduinoPort = portNames.FirstOrDefault(port => port.Contains(_arduinoGatewayConfig.SerialPortNamePrefix));
-            if (arduinoPort == null)
+            lock (_lockRoot)
             {
-                throw new ArduinoGatewayException($"No serial port with prefix {_arduinoGatewayConfig.SerialPortNamePrefix} was found.");
-            }
+                _logger.Debug("Opening Arduino Gateway. Searching for port with prefix {prefix}", _arduinoGatewayConfig.SerialPortNamePrefix);
+                var portNames = SerialPort.GetPortNames();
 
-            _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
-            _serialPort.ReadTimeout = 15000;
-            _serialPort.WriteTimeout = 15000;
-            _serialPort.Open();
+                _logger.Debug("Found ports {portNames}", portNames);
+                var arduinoPort = portNames.FirstOrDefault(port => port.Contains(_arduinoGatewayConfig.SerialPortNamePrefix));
+                if (arduinoPort == null)
+                {
+                    throw new ArduinoGatewayException($"No serial port with prefix {_arduinoGatewayConfig.SerialPortNamePrefix} was found.");
+                }
+
+                _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
+                _serialPort.ReadTimeout = 15000;
+                _serialPort.WriteTimeout = 15000;
+                _serialPort.DataReceived += OnDataReceived;
+                _serialPort.Open();
+            }
         }
 
         public string Send(byte command)
         {
-            if (_serialPort == null || !_serialPort.IsOpen)
+            lock (_lockRoot)
             {
-                _logger.Information("Port wasn't open. Opening...");
-                Open();
+                if (_serialPort == null || !_serialPort.IsOpen)
+                {
+                    _logger.Information("Port wasn't open. Opening...");
+                    Open();
+                }
+
+                _logger.Debug("Sending command {command}", command);
+                _serialPort.Write(new byte[] { command }, 0, 1);
+                _logger.Debug("Waiting for a response");
+
+                var response = new StringBuilder();
+                var buffer = new byte[150];
+                var bytesRed = 0;
+                
+                // while (_serialPort.BytesToRead > 0)
+                // {
+                //     bytesRed = _serialPort.Read(buffer, 0, Math.Min(_serialPort.BytesToRead, buffer.Length));
+                //     var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
+                //     _logger.Debug("{byte}", bufferedResponse);
+
+                //     response.Append(bufferedResponse);
+                // }
+
+                return response.ToString();
             }
-
-            _logger.Debug("Sending command {command}", command);
-            _serialPort.Write(new byte[] { command }, 0, 1);
-            _logger.Debug("Waiting for a response");
-
-            var response = new StringBuilder();
-            var buffer = new byte[150];
-            var bytesRed = 0;
-            _logger.Debug("Arduino response: {response}", response);
-            while (_serialPort.BytesToRead > 0)
-            {
-                bytesRed = _serialPort.Read(buffer, 0, Math.Min(_serialPort.BytesToRead, buffer.Length));
-                var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
-                _logger.Debug("{byte}", bufferedResponse);
-
-                response.Append(bufferedResponse);
-            }
-
-            return response.ToString();
         }
 
         public void Close()
         {
-            if (_serialPort.IsOpen)
+            lock (_lockRoot)
             {
-                _serialPort.Close();
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.DataReceived -= OnDataReceived;
+                    _serialPort.Close();
+                }
             }
+        }
+
+        private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var port = (SerialPort)sender;
+            var indata = port.ReadExisting();
+            
+            _logger.Information("Data received: {data}", indata);
         }
 
         #region IDisposable Support
@@ -113,6 +132,8 @@ namespace ArduinoLightswitcherGateway
 
         
         private SerialPort _serialPort;
+
+        private object _lockRoot = new object();
         private readonly ArduinoGatewayConfig _arduinoGatewayConfig;
         private readonly ILogger _logger = Log.ForContext<ArduinoGateway>();
     }
