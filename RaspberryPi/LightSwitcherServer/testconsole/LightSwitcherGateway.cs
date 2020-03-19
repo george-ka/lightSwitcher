@@ -55,6 +55,24 @@ namespace ArduinoLightswitcherGateway
             return true;
         }
 
+        public void SwitchAllOn()
+        {
+            var response = _arduinoGateway.Send(_lightSwitcherConfig.SwitchAllOnCommand);
+            _logger.Information("Switch all on response {response}", response);
+        }
+
+        public void SwitchAllOff()
+        {
+            var response = _arduinoGateway.Send(_lightSwitcherConfig.SwitchAllOffCommand);
+            _logger.Information("Switch all off response {response}", response);
+        }
+        
+        public void GetStatus()
+        {
+            var response = _arduinoGateway.Send(_lightSwitcherConfig.ShowStateCommand);
+            _logger.Information("State {response}", response);
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 

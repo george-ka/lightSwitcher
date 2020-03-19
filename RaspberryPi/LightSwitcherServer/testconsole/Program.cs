@@ -30,9 +30,28 @@ namespace testconsole
                 while (true)
                 {
                     command = Console.ReadLine();
-                    if (command == "x")
+                    
+                    if (command == EXIT_COMMAND)
                     {
                         break;
+                    }
+
+                    if (command == SWITCH_ALL_ON_COMMAND)
+                    {
+                        lightswitcher.SwitchAllOn();
+                        continue;
+                    }
+
+                    if (command == SWITCH_ALL_OFF_COMMAND)
+                    {
+                        lightswitcher.SwitchAllOff();
+                        continue;
+                    }
+
+                    if (command == GET_STATE_COMMAND)
+                    {
+                        lightswitcher.GetStatus();
+                        continue;
                     }
 
                     var parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -41,7 +60,7 @@ namespace testconsole
                     {
                         continue;
                     }
-                    
+
                     if (parts[0] == "1")
                     {
                         turnOn = true;
@@ -67,5 +86,10 @@ namespace testconsole
                 }
             }
         }
+
+        private const string EXIT_COMMAND = "x";
+        private const string SWITCH_ALL_ON_COMMAND = "allon";
+        private const string SWITCH_ALL_OFF_COMMAND = "alloff";
+        private const string GET_STATE_COMMAND = "state";
     }
 }
