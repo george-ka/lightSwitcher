@@ -37,6 +37,7 @@ namespace ArduinoLightswitcherGateway
                 _serialPort.ReadTimeout = 15000;
                 _serialPort.WriteTimeout = 15000;
                 _serialPort.DtrEnable = false;
+                _serialPort.RtsEnable = false;
                 _serialPort.Parity = Parity.None;
                 _serialPort.StopBits = StopBits.One;
                 _serialPort.DataReceived += OnDataReceived;
@@ -66,13 +67,34 @@ namespace ArduinoLightswitcherGateway
         private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             var port = (SerialPort)sender;
-            var indata = port.ReadExisting();
 
-            _responseBuffer.Append(indata);
-            if (indata.Contains('\n'))
+            var buffer = new byte[150];
+            var bytesRed = 0;
+            while (port.BytesToRead > 0)
             {
-                _logger.Information("Data received: {data}", _responseBuffer);
-                _lastResponses.Add(_responseBuffer.ToString());
+                bytesRed = port.Read(buffer, 0, Math.Min(port.BytesToRead, buffer.Length));
+                var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
+                _responseBuffer.Append(bufferedResponse);
+            }
+            
+            var lastSubstringIndex = 0;
+            for (var i = 0; i < _responseBuffer.Length; i++)
+            {
+                if (_responseBuffer[i] == '\n')
+                {
+                    var substring = _responseBuffer.ToString(lastSubstringIndex, i);
+                    _logger.Information("Data received: {data}", substring);
+                    _lastResponses.Add(substring);
+                    lastSubstringIndex++;
+                }
+            }
+
+            if (lastSubstringIndex < _responseBuffer.Length)
+            {
+                _responseBuffer.Remove(0, lastSubstringIndex);                
+            }
+            else
+            {
                 _responseBuffer.Clear();
             }
         }
