@@ -11,11 +11,11 @@
 #define NUMBER_OF_SWITCHES 16
 #define TURN_ON_OFFSET 48
 #define TURN_OFF_OFFSET 97
-#define SHOW_STATE_COMMAND = 5
-#define TURN_ALL_OFF_COMMAND = 6
-#define TURN_ALL_ON_COMMAND = 7
-#define OFF = 0
-#define ON = 1
+#define SHOW_STATE_COMMAND 5
+#define TURN_ALL_OFF_COMMAND 6
+#define TURN_ALL_ON_COMMAND 7
+#define OFF 0
+#define ON 1
 
 int inByte = 0; // incoming serial byte
 int pin = 0;
