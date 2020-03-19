@@ -37,6 +37,11 @@ namespace testconsole
 
                     var parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                     var turnOn = false;
+                    if (parts.Length == 0)
+                    {
+                        continue;
+                    }
+                    
                     if (parts[0] == "1")
                     {
                         turnOn = true;
