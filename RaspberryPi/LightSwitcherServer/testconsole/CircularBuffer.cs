@@ -76,7 +76,7 @@ namespace ArduinoLightswitcherGateway
             {
                 if (IsEmpty)
                 {
-                    throw new Exception("Collection is empty");
+                    return default(T);
                 }
 
                 var current = Current;
