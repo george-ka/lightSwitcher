@@ -85,7 +85,7 @@ namespace ArduinoLightswitcherGateway
                     var substring = _responseBuffer.ToString(lastSubstringIndex, i - lastSubstringIndex);
                     _logger.Information("Data received: {data}", substring);
                     _lastResponses.Add(substring);
-                    lastSubstringIndex++;
+                    lastSubstringIndex = i + 1;
                 }
             }
 
