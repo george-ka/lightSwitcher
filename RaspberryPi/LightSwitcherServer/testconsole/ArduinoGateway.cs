@@ -82,7 +82,7 @@ namespace ArduinoLightswitcherGateway
             {
                 if (_responseBuffer[i] == '\n')
                 {
-                    var substring = _responseBuffer.ToString(lastSubstringIndex, i);
+                    var substring = _responseBuffer.ToString(lastSubstringIndex, i - lastSubstringIndex);
                     _logger.Information("Data received: {data}", substring);
                     _lastResponses.Add(substring);
                     lastSubstringIndex++;
