@@ -73,7 +73,7 @@ namespace ArduinoLightswitcherGateway
             while (port.BytesToRead > 0)
             {
                 bytesRed = port.Read(buffer, 0, Math.Min(port.BytesToRead, buffer.Length));
-                var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
+                var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer, 0, bytesRed);
                 _responseBuffer.Append(bufferedResponse);
             }
             
