@@ -64,5 +64,6 @@ void establishContact() {
     Serial.print('A');   // send a capital A
     delay(300);
   }
-  Serial.print("\nConnected");
+  
+  Serial.print(" Connected\n");
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.IO.Ports;
+using System.Threading;
 using Serilog;
 using System.Text;
 
@@ -35,6 +36,10 @@ namespace ArduinoLightswitcherGateway
                 _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
                 _serialPort.ReadTimeout = 15000;
                 _serialPort.WriteTimeout = 15000;
+                _serialPort.DtrEnable = false;
+                _serialPort.Parity = Parity.None;
+                _serialPort.StopBits = StopBits.One;
+                _serialPort.DataReceived += OnDataReceived;
                 _serialPort.Open();
             }
         }
@@ -53,20 +58,22 @@ namespace ArduinoLightswitcherGateway
                 _serialPort.Write(new byte[] { command }, 0, 1);
                 _logger.Debug("Waiting for a response...");
 
-                var response = new StringBuilder();
-                var buffer = new byte[150];
-                var bytesRed = 0;
-                
-                while (_serialPort.BytesToRead > 0)
-                {
-                    bytesRed = _serialPort.Read(buffer, 0, Math.Min(_serialPort.BytesToRead, buffer.Length));
-                    var bufferedResponse = ASCIIEncoding.ASCII.GetString(buffer);
-                    response.Append(bufferedResponse);
-                }
+                Thread.Sleep(500);
+                return _lastResponses.Pop();
+            }
+        }
 
-                _logger.Debug("Response: {response}.", response);
+        private void OnDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var port = (SerialPort)sender;
+            var indata = port.ReadExisting();
 
-                return response.ToString();
+            _responseBuffer.Append(indata);
+            if (indata.Contains('\n'))
+            {
+                _logger.Information("Data received: {data}", _responseBuffer);
+                _lastResponses.Add(_responseBuffer.ToString());
+                _responseBuffer.Clear();
             }
         }
 
@@ -76,6 +83,7 @@ namespace ArduinoLightswitcherGateway
             {
                 if (_serialPort.IsOpen)
                 {
+                    _serialPort.DataReceived -= OnDataReceived;
                     _serialPort.Close();
                 }
             }
@@ -121,6 +129,10 @@ namespace ArduinoLightswitcherGateway
 
         
         private SerialPort _serialPort;
+
+        private StringBuilder _responseBuffer = new StringBuilder();
+
+        private CircularBuffer<string> _lastResponses = new CircularBuffer<string>(3);
 
         private object _lockRoot = new object();
         private readonly ArduinoGatewayConfig _arduinoGatewayConfig;
