@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace LightSwitcherWeb.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class LightController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        public LightController(ILightSwitcherGateway lightSwitcherGateway)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            if (lightSwitcherGateway == null)
+            {
+                throw new ArgumentNullException(nameof(lightSwitcherGateway));
+            }
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
+            _lightSwitcherGateway = lightSwitcherGateway;
         }
 
         [HttpGet]
@@ -35,5 +33,7 @@ namespace LightSwitcherWeb.Controllers
             })
             .ToArray();
         }
+ 
+        private readonly ILogger<WeatherForecastController> _logger = Log.ForContext<LightController>();
     }
 }

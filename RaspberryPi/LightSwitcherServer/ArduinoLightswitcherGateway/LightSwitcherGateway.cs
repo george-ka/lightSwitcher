@@ -1,9 +1,10 @@
 using System;
+using System.Linq;
 using Serilog;
 
 namespace ArduinoLightswitcherGateway
 {
-    public class LightSwitcherGateway : IDisposable
+    public class LightSwitcherGateway : ILightSwitcherGateway
     {
         public LightSwitcherGateway(ArduinoGateway arduinoGateway, LightSwitcherConfig lightSwitcherConfig)
         {
@@ -67,13 +68,28 @@ namespace ArduinoLightswitcherGateway
             _logger.Information("Switch all off response {response}", response);
         }
         
-        public void GetStatus()
+        public SwitchState[]  GetStatus()
         {
             var response = _arduinoGateway.Send(_lightSwitcherConfig.ShowStateCommand);
             _logger.Information("State {response}", response);
+
+            const string STATE_RESPONSE_PREFIX = "State:";
+            if (!response.StartsWith(STATE_RESPONSE_PREFIX))
+            {
+                return new SwitchState[0];
+            }
+
+            var parts = response
+                .Substring(STATE_RESPONSE_PREFIX.Length)
+                .Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+
+            return parts
+                .Select(state => state.Split(new [] { '=' })[1] == "0" ? SwitchState.Off : SwitchState.On)
+                .ToArray();
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -108,8 +124,8 @@ namespace ArduinoLightswitcherGateway
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
-        #endregion
 
+        #endregion
         
         private readonly ArduinoGateway _arduinoGateway;
 
@@ -118,6 +134,7 @@ namespace ArduinoLightswitcherGateway
         private readonly ILogger _logger = Log.ForContext<ArduinoGateway>();
 
         private const string TURNED_ON_RESPONSE = "Turn on pin:";
+        
         private const string TURNED_OFF_RESPONSE = "Turn off pin:";
     }
 }
