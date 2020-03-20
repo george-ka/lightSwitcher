@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testconsole", "testconsole\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLightswitcherGateway.Tests", "ArduinoLightswitcherGateway.Tests\ArduinoLightswitcherGateway.Tests.csproj", "{D34FD9E8-5DDA-4173-8058-610A81D121FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightSwitcherWeb", "LightSwitcherWeb\LightSwitcherWeb.csproj", "{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLightswitcherGateway", "ArduinoLightswitcherGateway\ArduinoLightswitcherGateway.csproj", "{C04AC60E-45E6-413B-8481-F27D2CA1265C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +48,29 @@ Global
 		{D34FD9E8-5DDA-4173-8058-610A81D121FE}.Release|x64.Build.0 = Release|Any CPU
 		{D34FD9E8-5DDA-4173-8058-610A81D121FE}.Release|x86.ActiveCfg = Release|Any CPU
 		{D34FD9E8-5DDA-4173-8058-610A81D121FE}.Release|x86.Build.0 = Release|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Debug|x64.Build.0 = Debug|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Debug|x86.Build.0 = Debug|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Release|x64.ActiveCfg = Release|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Release|x64.Build.0 = Release|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Release|x86.ActiveCfg = Release|Any CPU
+		{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}.Release|x86.Build.0 = Release|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Debug|x64.Build.0 = Debug|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Debug|x86.Build.0 = Debug|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Release|x64.ActiveCfg = Release|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Release|x64.Build.0 = Release|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Release|x86.ActiveCfg = Release|Any CPU
+		{C04AC60E-45E6-413B-8481-F27D2CA1265C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ArduinoLightswitcherGateway;
 using Xunit;
 
 namespace ArduinoLightswitcherGateway.Tests
