@@ -1,0 +1,53 @@
+Arduino MEGA 
+Right side of the board is connected to 2 independent light contol boards
+    __
+ 5V|●●|5V
+ 22|○●|23
+ 24|○●|25
+ 26|○●|27
+ 28|○●|29
+ 30|○●|31
+ 32|○●|33
+ 34|○●|35
+ 36|○●|37
+ 38|○●|39
+ 40|○●|41
+ 42|○●|43
+ 44|○●|45
+ 46|○●|47
+ 48|○●|49
+ 50|○●|51
+ 52|○●|53
+GRD|●●|GRD
+    --
+	
+	
+BOARD 1 				
+	
+Ard |  Switch | Description        |
+uino|   ID    |                    |
+PIN |         |                    |
+____|_________|____________________|
+23  | 0       | Kitchen central    |
+25  | 1       | LED 1 kitchen      |
+27  | 2       | Balcony            |
+29  | 3       | LED 2 kitchen      |
+31  | 4       | Spot over table    |
+33  | 5       | ! Doesn't work     |
+35  | 6       | Entrance, Hall     |
+37  | 7       | Kitchen small spots|
+
+BOARD 2
+
+Ard |  Switch | Description        |
+uino|   ID    |                    |
+PIN |         |                    |
+____|_________|____________________|
+39  | 8       | none               |
+41  | 9       | none               |
+43  | 10      | none               |
+45  | 11      | Kitchen bright spot|
+47  | 12      | Bed light right    |
+49  | 13      | Bed light left     |
+51  | 14      | Bedroom central    |
+53  | 15      | Wardrobe wire      |
