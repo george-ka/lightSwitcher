@@ -36,6 +36,9 @@ namespace ArduinoLightswitcherGateway
                 _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
                 _serialPort.ReadTimeout = READ_WRITE_TIMEOUT;
                 _serialPort.WriteTimeout = READ_WRITE_TIMEOUT;
+                // it doesn't work on raspberry btw, so Arduino resets on each Serial connection
+                // looks like only phisical solution works
+                // https://playground.arduino.cc/Main/DisablingAutoResetOnSerialConnection/
                 _serialPort.DtrEnable = false;
                 _serialPort.RtsEnable = false;
                 _serialPort.Parity = Parity.None;
