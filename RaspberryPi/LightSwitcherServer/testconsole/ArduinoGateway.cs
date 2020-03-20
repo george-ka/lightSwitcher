@@ -34,8 +34,8 @@ namespace ArduinoLightswitcherGateway
                 }
 
                 _serialPort = new SerialPort(arduinoPort, _arduinoGatewayConfig.SerialPortBaudRate);
-                _serialPort.ReadTimeout = 15000;
-                _serialPort.WriteTimeout = 15000;
+                _serialPort.ReadTimeout = READ_WRITE_TIMEOUT;
+                _serialPort.WriteTimeout = READ_WRITE_TIMEOUT;
                 _serialPort.DtrEnable = false;
                 _serialPort.RtsEnable = false;
                 _serialPort.Parity = Parity.None;
@@ -59,7 +59,14 @@ namespace ArduinoLightswitcherGateway
                 _serialPort.Write(new byte[] { command }, 0, 1);
                 _logger.Debug("Waiting for a response...");
 
-                Thread.Sleep(500);
+                string lastResponse;
+                do 
+                {
+                    lastResponse = _lastResponses.Current;
+                    // get responses untill they end
+                    Thread.Sleep(SLEEP_TIME_MS_TO_GET_RESPONSE);
+                }
+                while(lastResponse != _lastResponses.Current);
                 return _lastResponses.Pop();
             }
         }
@@ -68,7 +75,7 @@ namespace ArduinoLightswitcherGateway
         {
             var port = (SerialPort)sender;
 
-            var buffer = new byte[150];
+            var buffer = new byte[READ_BUFFER_SIZE];
             var bytesRed = 0;
             while (port.BytesToRead > 0)
             {
@@ -154,10 +161,15 @@ namespace ArduinoLightswitcherGateway
 
         private StringBuilder _responseBuffer = new StringBuilder();
 
-        private CircularBuffer<string> _lastResponses = new CircularBuffer<string>(3);
+        private CircularBuffer<string> _lastResponses = new CircularBuffer<string>(RESPONSES_BUFFER_SIZE);
 
         private object _lockRoot = new object();
         private readonly ArduinoGatewayConfig _arduinoGatewayConfig;
+
+        private const int READ_WRITE_TIMEOUT = 5000;
+        private const int SLEEP_TIME_MS_TO_GET_RESPONSE = 300;
+        private const int READ_BUFFER_SIZE = 150;
+        private const int RESPONSES_BUFFER_SIZE = 5;
         private readonly ILogger _logger = Log.ForContext<ArduinoGateway>();
     }
 }
