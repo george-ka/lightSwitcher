@@ -35,7 +35,7 @@ ____|_________|____________________|
 31  | 4       | Spot over table    |
 33  | 5       | ! Doesn't work     |
 35  | 6       | Entrance, Hall     |
-37  | 7       | Kitchen small spots|
+37  | 7       | Kitchen bright spot|
 
 BOARD 2
 
@@ -46,7 +46,7 @@ ____|_________|____________________|
 39  | 8       | none               |
 41  | 9       | none               |
 43  | 10      | none               |
-45  | 11      | Kitchen bright spot|
+45  | 11      | Kitchen small spots|
 47  | 12      | Bed light right    |
 49  | 13      | Bed light left     |
 51  | 14      | Bedroom central    |
