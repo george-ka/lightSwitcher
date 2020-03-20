@@ -25,7 +25,7 @@ namespace testconsole
                 arduinoGateway.Send(0);
 
                 var command = "";
-                Console.WriteLine("Print '1|0 <PIN>' or x for exit");
+                ShowUsage();
             
                 while (true)
                 {
@@ -58,6 +58,7 @@ namespace testconsole
                     var turnOn = false;
                     if (parts.Length == 0)
                     {
+                        ShowUsage();
                         continue;
                     }
 
@@ -72,12 +73,14 @@ namespace testconsole
                     else
                     {
                         Console.WriteLine("Unrecognized command");
+                        ShowUsage();
                         continue;
                     }
 
                     if (!byte.TryParse(parts[1], out byte pin))
                     {
                         Console.WriteLine("Can't parse pin");
+                        ShowUsage();
                         continue;
                     }
 
@@ -85,6 +88,15 @@ namespace testconsole
                     Console.WriteLine($"result: {result}");
                 }
             }
+        }
+
+        private static void ShowUsage()
+        {
+            Console.WriteLine("Print '1|0 <SwitchId>' to turn on of off switch");
+            Console.WriteLine($"{SWITCH_ALL_ON_COMMAND} to turn all switches on");
+            Console.WriteLine($"{SWITCH_ALL_OFF_COMMAND} to turn all switches off");
+            Console.WriteLine($"{GET_STATE_COMMAND} to show state");
+            Console.WriteLine($"{EXIT_COMMAND} for exit");
         }
 
         private const string EXIT_COMMAND = "x";
