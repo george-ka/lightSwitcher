@@ -9,15 +9,15 @@ namespace ArduinoLightswitcherGateway
             int turnOffOffset, 
             int numberOfSwitches,
             byte showStateCommand = 5,
-            byte switchAllOnCommand = 6,
-            byte switchAllOffCommand = 7)
+            byte switchAllOffCommand = 6,
+            byte switchAllOnCommand = 7)
         {
             TurnOnOffset = turnOnOffset;
             TurnOffOffset = turnOffOffset;
             NumberOfSwitches = numberOfSwitches;
             ShowStateCommand = showStateCommand;
-            SwitchAllOnCommand = switchAllOnCommand;
             SwitchAllOffCommand = switchAllOffCommand;
+            SwitchAllOnCommand = switchAllOnCommand;
         }
 
         public int TurnOnOffset { get; }
@@ -28,8 +28,8 @@ namespace ArduinoLightswitcherGateway
 
         public byte ShowStateCommand { get; }
 
-        public byte SwitchAllOnCommand { get; }
-
         public byte SwitchAllOffCommand { get; }
+        
+        public byte SwitchAllOnCommand { get; }
     }
 }
