@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using ArduinoLightswitcherGateway;
 
@@ -27,8 +26,10 @@ namespace LightSwitcherWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Configuration
-            services.AddSingleton<ILightSwitcherGateway>(LightSwitcherGatewayFactory.CreateLightswitcherGateway());
+            var gateway = Configuration["ArduinoGateway"];
+            _logger.Information("Hello! It's a startup. Configuring gateway as: {gateway}", gateway);
+            services.AddSingleton<ILightSwitcherGateway>(
+                LightSwitcherGatewayFactory.CreateLightswitcherGateway(gateway));
             services.AddControllers();
         }
 
@@ -51,5 +52,7 @@ namespace LightSwitcherWeb
                 endpoints.MapControllers();
             });
         }
+
+        private readonly ILogger _logger = Log.ForContext<Startup>(); 
     }
 }

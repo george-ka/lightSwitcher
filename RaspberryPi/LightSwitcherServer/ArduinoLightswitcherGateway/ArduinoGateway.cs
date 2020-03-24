@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArduinoLightswitcherGateway
 {
-    public class ArduinoGateway : IDisposable
+    public class ArduinoGateway : IArduinoGateway
     {
         public ArduinoGateway(ArduinoGatewayConfig gatewayConfig)
         {

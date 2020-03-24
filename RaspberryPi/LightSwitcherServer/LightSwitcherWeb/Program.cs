@@ -22,9 +22,10 @@ namespace LightSwitcherWeb
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseStartup<Startup>()
                         .UseSerilog((hostingContext,  loggerConfiguration) => loggerConfiguration
-                            .ReadFrom.Configuration(hostingContext.Configuration));
+                            .ReadFrom.Configuration(hostingContext.Configuration))
+                        .UseStartup<Startup>();
+                        
                 });
     }
 }

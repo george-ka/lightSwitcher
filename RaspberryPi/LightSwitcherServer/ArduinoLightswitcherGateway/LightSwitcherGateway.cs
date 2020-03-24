@@ -6,7 +6,7 @@ namespace ArduinoLightswitcherGateway
 {
     public class LightSwitcherGateway : ILightSwitcherGateway
     {
-        public LightSwitcherGateway(ArduinoGateway arduinoGateway, LightSwitcherConfig lightSwitcherConfig)
+        public LightSwitcherGateway(IArduinoGateway arduinoGateway, LightSwitcherConfig lightSwitcherConfig)
         {
             if (arduinoGateway == null)
             {
@@ -127,11 +127,11 @@ namespace ArduinoLightswitcherGateway
 
         #endregion
         
-        private readonly ArduinoGateway _arduinoGateway;
+        private readonly IArduinoGateway _arduinoGateway;
 
         private  readonly LightSwitcherConfig _lightSwitcherConfig;
         
-        private readonly ILogger _logger = Log.ForContext<ArduinoGateway>();
+        private readonly ILogger _logger = Log.ForContext<LightSwitcherGateway>();
 
         private const string TURNED_ON_RESPONSE = "Turn on pin:";
         
