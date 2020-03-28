@@ -4,18 +4,12 @@ using Serilog;
 
 namespace ArduinoLightswitcherGateway
 {
+    ///
+    /// This class is for debugging purposes only
+    /// it mimics the real Arduino board
+    /// 
     public class DummyArduinoGateway : IArduinoGateway
     {
-        public DummyArduinoGateway(ArduinoGatewayConfig gatewayConfig)
-        {
-            if (gatewayConfig == null)
-            {
-                throw new ArgumentException("Config can't be null", nameof(gatewayConfig));
-            }
-
-            _arduinoGatewayConfig = gatewayConfig;
-        }
-
         public void Open()
         {
             _logger.Information("Opening Fake Arduino Gateway.");
@@ -74,7 +68,7 @@ namespace ArduinoLightswitcherGateway
         private const byte SHOW_STATE_COMMAND = 5;
         private const byte TURN_ALL_OFF_COMMAND = 6;
         private const byte TURN_ALL_ON_COMMAND = 7;
-        private readonly ArduinoGatewayConfig _arduinoGatewayConfig;
+        
         private readonly ILogger _logger = Log.ForContext<DummyArduinoGateway>();
     }
 }

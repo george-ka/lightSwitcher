@@ -10,8 +10,7 @@ namespace ArduinoLightswitcherGateway
             {
                 case "fake":
                     return new LightSwitcherGateway(
-                        new DummyArduinoGateway(
-                            new ArduinoGatewayConfig("ttyACM", 9600)),
+                        new DummyArduinoGateway(),
                         new LightSwitcherConfig(48, 97, 14));
 
                 default:
