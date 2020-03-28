@@ -4,9 +4,9 @@ namespace ArduinoLightswitcherGateway
 {
     public static class LightSwitcherGatewayFactory
     {
-        public static ILightSwitcherGateway CreateLightswitcherGateway(string arduinoGateway)
+        public static ILightSwitcherGateway CreateLightswitcherGateway(string arduinoGatewayType)
         {
-            switch (arduinoGateway)
+            switch (arduinoGatewayType)
             {
                 case "fake":
                     return new LightSwitcherGateway(

@@ -26,10 +26,10 @@ namespace LightSwitcherWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var gateway = Configuration["ArduinoGateway"];
-            _logger.Information("Hello! It's a startup. Configuring gateway as: {gateway}", gateway);
+            var gatewayType = Configuration["ArduinoGateway"];
+            _logger.Information("Hello! It's a startup. Configuring gateway as: {gateway}", gatewayType);
             services.AddSingleton<ILightSwitcherGateway>(
-                LightSwitcherGatewayFactory.CreateLightswitcherGateway(gateway));
+                LightSwitcherGatewayFactory.CreateLightswitcherGateway(gatewayType));
             services.AddControllers();
         }
 
