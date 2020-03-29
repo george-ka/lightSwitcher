@@ -39,8 +39,8 @@ namespace LightSwitcherWeb.Controllers
             }
         }
 
-        [HttpPost("/{switchId}")]
-        public IActionResult ChangeSwitchState(byte switchId, string mode)
+        [HttpPost("{switchId}")]
+        public IActionResult ChangeSwitchState(byte switchId, [FromQuery]string mode)
         {
             var result = _lightSwitcherGateway.ChangeSwitchState(switchId, mode == "on");
             return Ok(result);

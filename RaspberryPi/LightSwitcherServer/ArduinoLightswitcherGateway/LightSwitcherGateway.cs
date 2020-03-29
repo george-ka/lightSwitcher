@@ -22,7 +22,7 @@ namespace ArduinoLightswitcherGateway
             _lightSwitcherConfig = lightSwitcherConfig;
         }
 
-        public bool ChangeSwitchState(byte switchId, bool isOn)
+        public string ChangeSwitchState(byte switchId, bool isOn)
         {
             var response = _arduinoGateway.Send((byte)(isOn 
                 ? switchId + _lightSwitcherConfig.TurnOnOffset
@@ -31,29 +31,22 @@ namespace ArduinoLightswitcherGateway
             if ((isOn && !response.StartsWith(TURNED_ON_RESPONSE))
             || !isOn && !response.StartsWith(TURNED_OFF_RESPONSE))
             {
-                _logger.Warning("Received unexpected response: {isOn}, {response}", isOn, response);
-                return false;
+                return $"Received unexpected response: {isOn}, {response}";
             }
 
             var responseParts = response.Split(':');
-            if (responseParts.Length != 2)
+            if (responseParts.Length != 3
+                || !byte.TryParse(responseParts[2].Trim(), out byte switchIdParsed))
             {
-                return false;
+                return $"Received unexpected response: {response}";
             }
 
-            if (!byte.TryParse(responseParts[1].Trim(), out byte pin))
+            if (switchIdParsed != switchId)
             {
-                _logger.Warning("Couldn't parse the response");
-                return false;
+                return $"Returned switchId is not equal to the one was sent {switchIdParsed} {switchId}";
             }
 
-            if (pin != switchId)
-            {
-                _logger.Warning("Returned pin is not equal to the one was sent {pin} {switchId}", pin, switchId);
-                return false;
-            }
-
-            return true;
+            return $"Successfully change state of switch {switchId} to {isOn}";
         }
 
         public void SwitchAllOn()
@@ -133,8 +126,8 @@ namespace ArduinoLightswitcherGateway
         
         private readonly ILogger _logger = Log.ForContext<LightSwitcherGateway>();
 
-        private const string TURNED_ON_RESPONSE = "Turn on pin:";
+        private const string TURNED_ON_RESPONSE = "Turn ON pin:";
         
-        private const string TURNED_OFF_RESPONSE = "Turn off pin:";
+        private const string TURNED_OFF_RESPONSE = "Turn OFF pin:";
     }
 }

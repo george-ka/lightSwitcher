@@ -4,7 +4,7 @@ namespace ArduinoLightswitcherGateway
 {
     public interface ILightSwitcherGateway : IDisposable
     {
-        bool ChangeSwitchState(byte switchId, bool isOn);
+        string ChangeSwitchState(byte switchId, bool isOn);
 
         void SwitchAllOn();
 
