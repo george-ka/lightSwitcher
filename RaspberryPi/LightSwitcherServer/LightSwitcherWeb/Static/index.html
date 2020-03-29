@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Панель управления светом</title>
+<link rel="stylesheet" href="style/style.css">
+<link rel="stylesheet" href="minitoggle.css">
+
+<body>
+    <section class="holder holder-top">
+	<h1><strong class="highlight">Панель управления светом</strong></h1>
+        
+        <h3>Go ahead&hellip; try it now.</h3>
+		<span id="status"></span>
+
+        <fieldset class="demo">
+            <div>
+			<span>0</span>
+            <div class="toggle" id="switch0"></div>
+            <h3 id="result0"></h3>
+            </div>
+        </fieldset>
+
+		<fieldset class="demo">
+            <div>
+            <span>1</span>
+			<div class="toggle" id="switch1"></div>
+            <h3 id="result1"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>2</span>
+            <div class="toggle" id="switch2"></div>
+            <h3 id="result2"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>3</span>
+            <div class="toggle" id="switch3"></div>
+            <h3 id="result3"></h3>
+            </div>
+        </fieldset>
+		
+		
+		<fieldset class="demo">
+            <div>
+			<span>4</span>
+            <div class="toggle" id="switch4"></div>
+            <h3 id="result4"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>5</span>
+            <div class="toggle" id="switch5"></div>
+            <h3 id="result5"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>6</span>
+            <div class="toggle" id="switch6"></div>
+            <h3 id="result6"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>7</span>
+            <div class="toggle" id="switch7"></div>
+            <h3 id="result7"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>8</span>
+            <div class="toggle" id="switch8"></div>
+            <h3 id="result8"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>9</span>
+            <div class="toggle" id="switch9"></div>
+            <h3 id="result9"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>10</span>
+            <div class="toggle" id="switch10"></div>
+            <h3 id="result10"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>11</span>
+            <div class="toggle" id="switch11"></div>
+            <h3 id="result11"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>12</span>
+            <div class="toggle" id="switch12"></div>
+            <h3 id="result12"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>13</span>
+            <div class="toggle" id="switch13"></div>
+            <h3 id="result13"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>14</span>
+            <div class="toggle" id="switch14"></div>
+            <h3 id="result14"></h3>
+            </div>
+        </fieldset>
+		
+		<fieldset class="demo">
+            <div>
+			<span>15</span>
+            <div class="toggle" id="switch15"></div>
+            <h3 id="result15"></h3>
+            </div>
+        </fieldset>
+
+    </section>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="minitoggle.js"></script>
+
+    <script type="text/javascript">
+	
+		var apiBaseUrl = "http://192.168.1.76:5000/api/v1/switches/";
+        $('.toggle').minitoggle();
+        $('.toggle').on("toggle", function(e)
+		{
+			var switchId = $(this).attr("id").replace("switch", "");
+			var commandUrl = apiBaseUrl + switchId + "?mode=" + (e.isActive ? "on" : "off");
+			
+			$.post(commandUrl, "", 
+				function(data, status, jqXHR)
+				{
+					console.log("request completed to " + commandUrl)
+					console.log(data)
+					console.log(status)
+				});
+			$("#status").html($(this).attr("id"))
+				if (e.isActive)
+				   ;// $("#status").html("Oh, you turn me on.")
+				else
+					$(".result").html("No, you turn me off.")
+        });
+    </script>
+
+
+</body>
