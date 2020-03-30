@@ -1,4 +1,4 @@
-var apiBaseUrl = "http://localhost:5000/api/v1/switches/";
+var apiBaseUrl = document.location.href + "api/v1/switches/";
 
 $(document).ready(function()
 {
