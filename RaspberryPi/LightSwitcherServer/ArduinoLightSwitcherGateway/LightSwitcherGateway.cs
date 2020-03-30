@@ -77,7 +77,7 @@ namespace ArduinoLightswitcherGateway
                 .Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
             return parts
-                .Select(state => state.Split(new [] { '=' })[1] == "0" ? SwitchState.Off : SwitchState.On)
+                .Select(state => state.Split(new [] { '=' }, StringSplitOptions.RemoveEmptyEntries)[1] == "0" ? SwitchState.Off : SwitchState.On)
                 .ToArray();
         }
 
