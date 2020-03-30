@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ArduinoLightswitcherGateway;
 using Serilog;
 using LightSwitcherWeb.Model;
+using Microsoft.AspNetCore.Cors;
 
 namespace LightSwitcherWeb.Controllers
 {
@@ -43,7 +44,12 @@ namespace LightSwitcherWeb.Controllers
         public IActionResult ChangeSwitchState(byte switchId, [FromQuery]string mode)
         {
             var result = _lightSwitcherGateway.ChangeSwitchState(switchId, mode == "on");
-            return Ok(result);
+            return new JsonResult(
+                new {
+                    Result = true,
+                    Message = result
+                }
+            );
         }
 
         [HttpPost("/all")]

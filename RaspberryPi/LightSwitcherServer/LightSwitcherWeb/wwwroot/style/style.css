@@ -1,15 +1,14 @@
 body {
     line-height: 1.7;
     margin: 1em;
-    font-family: 'Roboto';
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
     background-color:#f7f7f7;
 }
 
 .holder {
     max-width: 728px;
     margin: 0 auto;
-    padding: 3em 0 4.2em;
-    border-bottom: 1px dotted #ddd;
+    padding: 3em 0 1em;
 }
 
 .holder-top {
@@ -84,9 +83,6 @@ h1 .link-anchor {
     margin-top: 16px;
 }
 
-
-
-
 body {
     font-weight: 100;
 }
@@ -153,18 +149,10 @@ pre > code {
     padding: 0 4.2em 0 0;
 }
 
-.demo{
-    height: 30px;
-}
-
 .demo > div > *{
     display: inline-block;
     line-height: 30px;
     vertical-align: middle;
-}
-
-.colors{
-
 }
 
 .colors span{
@@ -192,8 +180,6 @@ span.yellow{
 span.red{
     background-color: #ec6231;
 }
-
-
 
 .result{
     margin: 0 20px;
@@ -272,82 +258,6 @@ span.red{
 }
 
 
-.peace {
-    position: relative;
-    display: inline-block;
-    background: red;
-    width: 0;
-    left: .66em;
-    top: .66em;
-}
-.peace:after {
-    content: "\270C";
-    font-size: 4em;
-    color: #e5e5e5;
-}
-
-
-
-.string {
-    color: #68c244;
-}
-
-.selector,
-.function,
-.method {
-    color: #0069bc;
-}
-
-.comment,
-.comment a {
-    /*color: #8e69c9;*/
-    color: #0089ec;
-    font-style: italic;
-}
-
-.constant {
-    color: #d40;
-}
-
-.tag-name,
-.attribute {
-    color: #c50;
-}
-
-.keyword {
-    color: #b90690;
-}
-
-.rainbow,
-.operator {
-    color: #585856;
-}
-
-
-.dimmed,
-a.dimmed {
-    color: #999;
-}
-
-.warning {
-    color: #e20;
-}
-
-.alignleft {
-    float: left;
-}
-
-.alignright {
-    float: right;
-}
-
-.aligncenter {
-    text-align: center;
-}
-
-
-
-
 .clear:before,
 .clear:after {
     content: " ";
@@ -361,18 +271,29 @@ a.dimmed {
 
 /* My styles */
 
-#switchesContainer {
+.switchGroupTitle {
+    margin: 0 0 -0.6em 10px;
+}
+
+.switchesContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-content: space-around;
+    border: 1px dotted #ddd;
+    padding: 15px 5px 5px 5px;
+    margin: 0 0 15px 0;
 }
-
 
 fieldset {
     position: relative;
     border: 0;
-    margin: 0 0 2.4em;
+    margin: 5px;
     padding: 0;
+}
+
+.switchesContainer fieldset span {
+    display: block;
+    text-align: center;
 }

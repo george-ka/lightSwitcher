@@ -10,85 +10,74 @@
 
 <body>
     <section class="holder holder-top">
-	<h1><strong class="highlight">Light control panel</strong></h1>
-        
-		<span id="status"></span>
-
-        <div id="switchesContainer">
-            <fieldset class="demo">
-                <div>
-                <span>Kitchen central</span>
-                <div class="toggle" id="switch0" data-switchid="0"></div>
-                <h3 id="result0"></h3>
-                </div>
-            </fieldset>
-
-            <fieldset class="demo">
-                <div>
-                <span>LED 1 kitchen</span>
-                <div class="toggle" id="switch1" data-switchid="1"></div>
-                <h3 id="result1"></h3>
-                </div>
-            </fieldset>
-            
-            <fieldset class="demo">
-                <div>
-                <span>LED 2 Kitchen</span>
-                <div class="toggle" id="switch3" data-switchid="3"></div>
-                <h3 id="result3"></h3>
-                </div>
-            </fieldset>
-            
-            
+               
+        <h3 class="switchGroupTitle">Kitchen</h3>
+        <div class="switchesContainer">
             <fieldset class="demo">
                 <div>
                 <span>Table spot</span>
                 <div class="toggle" id="switch4" data-switchid="4"></div>
-                <h3 id="result4"></h3>
                 </div>
             </fieldset>
 
             <fieldset class="demo">
                 <div>
-                <span>Kitchen small spots</span>
+                <span>Cosy spots</span>
                 <div class="toggle" id="switch11" data-switchid="11"></div>
-                <h3 id="result11"></h3>
                 </div>
             </fieldset>
 
             <fieldset class="demo">
                 <div>
-                <span>Kitchen bright LED spots</span>
-                <div class="toggle" id="switch7" data-switchid="7"></div>
-                <h3 id="result7"></h3>
+                <span>Central</span>
+                <div class="toggle" id="switch0" data-switchid="0"></div>
                 </div>
             </fieldset>
 
+            <fieldset class="demo">
+                <div>
+                <span>LED 1</span>
+                <div class="toggle" id="switch1" data-switchid="1"></div>
+                </div>
+            </fieldset>
             
+            <fieldset class="demo">
+                <div>
+                <span>LED 2</span>
+                <div class="toggle" id="switch3" data-switchid="3"></div>
+                </div>
+            </fieldset>
+            
+            <fieldset class="demo">
+                <div>
+                <span>Bright spots</span>
+                <div class="toggle" id="switch7" data-switchid="7"></div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <div class="switchesContainer">
 <!--             
             <fieldset class="demo">
                 <div>
                 <span>Doesn't work 5</span>
                 <div class="toggle" id="switch5" data-switchid="5"></div>
-                <h3 id="result5"></h3>
                 </div>
             </fieldset>
 -->
 
-            
-<fieldset class="demo">
-    <div>
-    <span>Balcony</span>
-    <div class="toggle" id="switch2" data-switchid="2"></div>
-    <h3 id="result2"></h3>
-    </div>
-</fieldset>
+                        
+            <fieldset class="demo">
+                <div>
+                <span>Balcony</span>
+                <div class="toggle" id="switch2" data-switchid="2"></div>
+                </div>
+            </fieldset>
 
             <fieldset class="demo">
                 <div>
                 <span>Entrance hall</span>
                 <div class="toggle" id="switch6" data-switchid="6"></div>
-                <h3 id="result6"></h3>
                 </div>
             </fieldset>
             
@@ -97,7 +86,6 @@
                 <div>
                 <span>8</span>
                 <div class="toggle" id="switch8" data-switchid="8"></div>
-                <h3 id="result8"></h3>
                 </div>
             </fieldset>
             
@@ -105,7 +93,6 @@
                 <div>
                 <span>9</span>
                 <div class="toggle" id="switch9" data-switchid="9"></div>
-                <h3 id="result9"></h3>
                 </div>
             </fieldset>
             
@@ -113,17 +100,21 @@
                 <div>
                 <span>10</span>
                 <div class="toggle" id="switch10" data-switchid="10"></div>
-                <h3 id="result10"></h3>
                 </div>
             </fieldset>
              -->
 
+            <fieldset class="demo">
+                <div>
+                <span>Bedroom central</span>
+                <div class="toggle" id="switch14" data-switchid="14"></div>
+                </div>
+            </fieldset>
             
             <fieldset class="demo">
                 <div>
                 <span>Bed light right</span>
                 <div class="toggle" id="switch12" data-switchid="12"></div>
-                <h3 id="result12"></h3>
                 </div>
             </fieldset>
             
@@ -131,28 +122,22 @@
                 <div>
                 <span>Bed light left</span>
                 <div class="toggle" id="switch13" data-switchid="13"></div>
-                <h3 id="result13"></h3>
                 </div>
             </fieldset>
             
-            <fieldset class="demo">
-                <div>
-                <span>Bedroom central</span>
-                <div class="toggle" id="switch14" data-switchid="14"></div>
-                <h3 id="result14"></h3>
-                </div>
-            </fieldset>
             
 <!--             
             <fieldset class="demo">
                 <div>
                 <span>Wardrobe wire</span>
                 <div class="toggle" id="switch15" data-switchid="15"></div>
-                <h3 id="result15"></h3>
                 </div>
             </fieldset> -->
         </div>
     </section>
+
+    
+		<span id="status"></span>
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/minitoggle.js"></script>

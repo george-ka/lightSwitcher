@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using ArduinoLightswitcherGateway;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace LightSwitcherWeb
 {
@@ -30,6 +32,16 @@ namespace LightSwitcherWeb
             _logger.Information("Hello! It's a startup. Configuring gateway as: {gateway}", gatewayType);
             services.AddSingleton<ILightSwitcherGateway>(
                 LightSwitcherGatewayFactory.CreateLightswitcherGateway(gatewayType));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllPolicy", builder => 
+                {
+                    builder
+                        .AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod();
+                });
+            }); 
             services.AddControllers();
         }
 
@@ -41,11 +53,12 @@ namespace LightSwitcherWeb
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            // app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseCors("AllowAllPolicy");
 
             app.UseEndpoints(endpoints =>
             {
