@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testconsole", "testconsole\testconsole.csproj", "{EEA2FA53-9C06-47A2-AAB1-533EAADB6F55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLightswitcherGateway.Tests", "ArduinoLightswitcherGateway.Tests\ArduinoLightswitcherGateway.Tests.csproj", "{D34FD9E8-5DDA-4173-8058-610A81D121FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLightswitcherGateway.Tests", "ArduinoLightSwitcherGateway.Tests\ArduinoLightSwitcherGateway.Tests.csproj", "{D34FD9E8-5DDA-4173-8058-610A81D121FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightSwitcherWeb", "LightSwitcherWeb\LightSwitcherWeb.csproj", "{1CD2549B-ABFF-4F7C-BDDF-3AB26FADE13B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLightswitcherGateway", "ArduinoLightswitcherGateway\ArduinoLightswitcherGateway.csproj", "{C04AC60E-45E6-413B-8481-F27D2CA1265C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLightSwitcherGateway", "ArduinoLightSwitcherGateway\ArduinoLightSwitcherGateway.csproj", "{C04AC60E-45E6-413B-8481-F27D2CA1265C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
