@@ -1,0 +1,6 @@
+#!/bin/bash
+
+ath=$(pwd)
+r out
+cd out
+arduino-cli compile -b "arduino:avr:mega" -p /dev/ttyACM0 -u  $path

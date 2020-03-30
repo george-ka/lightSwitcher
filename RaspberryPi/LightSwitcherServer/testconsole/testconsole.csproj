@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ArduinoLightSwitcherGateway\ArduinoLightswitcherGateway.csproj" />
+    <ProjectReference Include="../ArduinoLightSwitcherGateway/ArduinoLightSwitcherGateway.csproj" />
   </ItemGroup>
 
 </Project>
