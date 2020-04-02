@@ -6,6 +6,8 @@ It consists of tree major parts:
 2. Arduino Mega board which controls the relays
 3. Raspberry PI with a server to contol Arduino
 
+You will find Arduino scetch in the ArduinoLightSwitcher(ArduinoLightSwitcher/ArduinoLightSwitcher.ino) directory
+
 Arduino Mega controls the relays by setting LOW or HIGH signal to its corresponding pins.
 Raspberry PI sends simple commands (bytes) via serial connection to Arduino. 
 Arduino reads the commands and interprets them as commands to turn on or off particular switch by setting 
