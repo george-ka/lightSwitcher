@@ -1,10 +1,14 @@
 # lightSwitcher
 This project helps to contol home lights.
 
+[Demo](https://www.youtube.com/watch?v=fEmTeBbHTBU)
+
 It consists of tree major parts:
 1. Physical circuit board with relays
 2. Arduino Mega board which controls the relays
 3. Raspberry PI with a server to contol Arduino
+
+Relays board description will come later.
 
 You will find Arduino scetch in the ArduinoLightSwitcher(ArduinoLightSwitcher/ArduinoLightSwitcher.ino) directory
 
