@@ -10,7 +10,7 @@ It consists of tree major parts:
 
 Relays board description will come later.
 
-You will find Arduino scetch in the ArduinoLightSwitcher(ArduinoLightSwitcher/ArduinoLightSwitcher.ino) directory
+You will find Arduino scetch in the [ArduinoLightSwitcher](./ArduinoLightSwitcher/ArduinoLightSwitcher.ino) directory
 
 Arduino Mega controls the relays by setting LOW or HIGH signal to its corresponding pins.
 Raspberry PI sends simple commands (bytes) via serial connection to Arduino. 
