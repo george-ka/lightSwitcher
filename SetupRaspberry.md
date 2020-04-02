@@ -90,11 +90,15 @@ Publish the app first
 cd ~
 mkdir lightswitcher-source
 cd lightswitcher-source
-git 
+git clone https://github.com/savamura/lightSwitcher.git
+
+cd lightSwitcher/RaspberryPi/LightSwitcherServer/LightSwitcherWeb
+dotnet publish -c Release
+
+mkdir ~/lightswitcher
+mv bin/Release/netcoreapp3.1/publish/* ~/lightswitcher
 
 ```
-
-
 
 Make dotnet process auto-restart, create a systemd service.
 
@@ -124,7 +128,6 @@ Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
 [Install] 
 WantedBy=multi-user.target
 ```
-
 
 
 Register and start the service:
