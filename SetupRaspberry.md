@@ -9,7 +9,16 @@ You will also need to install arduino cli to be able to upload program to Arduin
 ```bash
 sudo apt-get update
 sudo apt-get upgrade
+```
 
+## Install Arduino cli
+
+https://arduino.github.io/arduino-cli/installation/
+
+
+## Install .NET Core 
+
+```bash
 # Download dotnet core 3.1 SDK
 wget https://download.visualstudio.microsoft.com/download/pr/349f13f0-400e-476c-ba10-fe284b35b932/44a5863469051c5cf103129f1423ddb8/dotnet-sdk-3.1.102-linux-arm.tar.gz
 
@@ -19,7 +28,7 @@ tar zxf dotnet-sdk-3.1.102-linux-arm.tar.gz -C $HOME/dotnet
 
 ```
 
-# "Auto Start" .NET Core Environment
+## "Auto Start" .NET Core Environment
 
 Every time you restart your Raspberry Pi, you'll have to re-configure the DOTNET_ROOT and PATH environment variables or .NET CLI won't work. To make them auto start with the system, we can modify the ".profile".
 
@@ -68,8 +77,60 @@ server {
 ``` 
 
 Check and apply the config file:
+Start lightswitcher, it will be accessible via Raspberry Pi IP on port 80.
 
-```
+```bash
 sudo nginx -t
 sudo nginx -s reload
+```
+
+Publish the app first
+
+```bash
+cd ~
+mkdir lightswitcher-source
+cd lightswitcher-source
+git 
+
+```
+
+
+
+Make dotnet process auto-restart, create a systemd service.
+
+```bash
+sudo nano /etc/systemd/system/lightswitcher.service
+```
+
+With the following content:
+
+```
+[Unit]
+Description=ASP.NET Core 3.0 App - LightSwitcherWeb
+
+[Service]
+# We can only use absolute path in systemd configuation
+WorkingDirectory=/home/pi/lightswitcher/server/
+ExecStart=/home/pi/dotnet/dotnet/dotnet /home/pi/lightswitcher/server/LightSwitcherWeb.dll
+Restart=always
+# Restart service after 10 seconds if the dotnet service crashes:
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=lightswitcher
+User=pi
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install] 
+WantedBy=multi-user.target
+```
+
+
+
+Register and start the service:
+
+```bash
+sudo systemctl enable lightswitcher.service
+sudo systemctl start lightswitcher.service
+sudo systemctl status lightswitcher.service
 ```

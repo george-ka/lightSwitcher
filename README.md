@@ -15,4 +15,4 @@ Raspberry PI will connect to home wifi network and expose a web API via ASP.NET 
 which should be accessible from the local network to any device connected to the home network. 
 It will also provide a simple web interface.
 
-[a relative link](SetupRaspberry.md)
+[See Raspberry PI setup](SetupRaspberry.md)
