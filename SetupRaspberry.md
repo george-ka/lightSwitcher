@@ -96,7 +96,7 @@ cd lightSwitcher/RaspberryPi/LightSwitcherServer/LightSwitcherWeb
 dotnet publish -c Release
 
 mkdir ~/lightswitcher
-mv bin/Release/netcoreapp3.1/publish/* ~/lightswitcher
+rsync -ar bin/Release/netcoreapp3.1/publish/* ~/lightswitcher/server
 
 ```
 
