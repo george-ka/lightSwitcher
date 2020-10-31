@@ -3,6 +3,7 @@
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 // Create this bucket in console upfront
+// Setup permission for service account to access the bucket
 const myBucket = storage.bucket('alice-light-swithcer-share');
 var initializationFailed = false;
 var bucketDoesntExist = false;
@@ -23,19 +24,6 @@ myBucket.exists((error, exists) =>
 
   bucketDoesntExist = true;
 });
-
-
-/**
- * 
- * @param {File} file 
- */
-async function getMetadata(file, res, content)
-{
-  content.metadata = await file.getMetadata();
-  res
-      .status(200)
-      .json(content);
-};
 
 exports.helloContent = (req, res) => {
   
