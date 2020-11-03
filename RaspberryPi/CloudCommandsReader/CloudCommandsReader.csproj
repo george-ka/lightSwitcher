@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>dotnet-CloudCommandsReader-6B4F6ABB-0B26-4C3E-90ED-D45FC141DEFA</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="3.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.2" />
+  </ItemGroup>
+</Project>
