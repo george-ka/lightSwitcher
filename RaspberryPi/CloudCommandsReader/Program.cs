@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace CloudCommandsReader
 {
@@ -18,7 +20,11 @@ namespace CloudCommandsReader
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<Worker>();
+                    var section = hostContext.Configuration.GetSection("CloudCommandsReaderSettings");
+                    services
+                        .Configure<CloudCommandsReaderSettings>(hostContext.Configuration.GetSection("CloudCommandsReaderSettings"))
+                        .AddSingleton<CloudStorageCommandReader>()
+                        .AddHostedService<Worker>();
                 });
     }
 }

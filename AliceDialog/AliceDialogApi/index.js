@@ -57,7 +57,7 @@ exports.helloContent = (req, res) => {
   }
 
   var file = myBucket.file("command.json");
-  file.save('{"command": "turn on"}', (error) =>
+  file.save('1', (error) =>
   {
     if (!error)
     {

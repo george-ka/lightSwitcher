@@ -17,4 +17,9 @@ gcloud functions describe helloContent
 ```
 
 ## Create access keys for Raspberry command service to read the command file
-TBD
+
+```
+gcloud iam service-accounts create raspberry-lightswitcher --description="Service account for Home Raspberry LightSwitcher" --display-name="Raspberry LightSwitcher"
+gcloud projects add-iam-policy-binding <project-id> --member="serviceAccount:raspberry-lightswitcher@<project-id>.iam.gserviceaccount.com" --role="roles/storage.objectAdmin"
+gcloud iam service-accounts keys create gcloud_service_account_key.json --iam-account=raspberry-lightswitcher@<project-id>.iam.gserviceaccount.com
+```
