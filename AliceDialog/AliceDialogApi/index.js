@@ -26,22 +26,50 @@ myBucket.exists((error, exists) =>
 });
 
 exports.helloContent = (req, res) => {
+
+  if (typeof req.body.request == "undefined")
+  {
+    req.body.request = { command : null }
+  }
+
+  console.log("Input:" + req.body.request.command + " " + JSON.stringify(req.body)); 
   
-  var createResponse = function(sayWhat)
+  var createResponse = function(sayWhat, endSession)
   {
     return {
       "response": {
           "text": sayWhat,
-          "end_session": true
+          "end_session": endSession
         },
         "version": "1.0"
     }
   };
 
+  var voiceCommand = req.body.request.command;
+  var outputCommand = null;
+
+  if (voiceCommand == "")
+  {
+    res.status(200).json(createResponse("Слушаю вашу команду", false));
+    return;
+  }
+  else if (voiceCommand == "включи свет")
+  {
+    outputCommand = "0";
+  } 
+  else if (voiceCommand == "выключи свет")
+  {
+    outputCommand = "8";
+  } 
+  else
+  {
+    
+  }
+
   function returnError(error)
   { 
     console.log(error);
-    res.status(200).json(createResponse("Произошла неведомая ошибка"));
+    res.status(200).json(createResponse("Произошла неведомая ошибка", true));
   } 
 
   if (initializationFailed)
@@ -56,12 +84,18 @@ exports.helloContent = (req, res) => {
     return;
   }
 
+  if (outputCommand === null)
+  {
+    res.status(200).json(createResponse("Ok", true));
+    return;
+  }
+
   var file = myBucket.file("command.json");
-  file.save('1', (error) =>
+  file.save(outputCommand, (error) =>
   {
     if (!error)
     {
-      res.status(200).json(createResponse("Ok"));
+      res.status(200).json(createResponse("Ok", true));
     }
     else
     {
