@@ -29,7 +29,7 @@ cd ~/lightswitcher/command-reader-service
 cat appsettings.Development.json > appsettings.Production.json
 nano appsettings.Production.json
 
-# Change CloudCommandsReaderSettings.KeyFilePath to a key file location. For instance "~/lightswitcher/gcloud_service_account_key.json"
+# Change CloudCommandsReaderSettings.KeyFilePath to a key file location. For instance "/home/pi/lightswitcher/gcloud_service_account_key.json"
 
 ```
 
