@@ -1,127 +1,64 @@
 
-# Setting up Raspberry PI
+# Setting up Command Reader on Raspberry PI
 
-You will need to install .net core on raspberry 
-https://edi.wang/post/2019/9/29/setup-net-core-30-runtime-and-sdk-on-raspberry-pi-4
+## Prerequisites
+Install the lightswitcher server first 
+[See Raspberry PI setup](SetupRaspberry.md)
 
-You will also need to install arduino cli to be able to upload program to Arduino.
+The CommandReader checks a blob located on Google Cloud Storage every second and reads a byte command from it. 
+It has a mapping in the setting file between input command byte and output range of switchers that should be turned on or off.
 
-```bash
-sudo apt-get update
-sudo apt-get upgrade
-```
+[See Google Cloud Setup](AliceDialog/GoogleCoudInitializationCommands.md) to install a function, which implements a [dialog](AliceDialog/AliceDialogApi/index.js) with Alice home station and writes a byte command into a blob.
 
-## Install Arduino cli
+.NET Core should has already been installed on Raspberry.
 
-https://arduino.github.io/arduino-cli/installation/
-
-
-## Install .NET Core 
-
-```bash
-# Download dotnet core 3.1 SDK
-wget https://download.visualstudio.microsoft.com/download/pr/349f13f0-400e-476c-ba10-fe284b35b932/44a5863469051c5cf103129f1423ddb8/dotnet-sdk-3.1.102-linux-arm.tar.gz
-
-
-mkdir dotnet
-tar zxf dotnet-sdk-3.1.102-linux-arm.tar.gz -C $HOME/dotnet
-
-```
-
-## "Auto Start" .NET Core Environment
-
-Every time you restart your Raspberry Pi, you'll have to re-configure the DOTNET_ROOT and PATH environment variables or .NET CLI won't work. To make them auto start with the system, we can modify the ".profile".
-
-```bash
-cd ~
-sudo nano .profile
-```
-
-Add those lines at the end of this file
-
-```bash
-# set .NET Core SDK and Runtime path
-export DOTNET_ROOT=$HOME/dotnet
-export PATH=$PATH:$HOME/dotnet
-```
-
-Install and start Nginx
-
-```bash
-sudo apt-get install nginx
-sudo /etc/init.d/nginx start
-```
-
-Open Nginx config file:
-
-```bash
-sudo nano /etc/nginx/sites-available/default
-```
-
-Replace its content with:
-```
-server {
-    listen        80 default_server;
-    server_name   _;
-    location / {
-        proxy_pass         http://localhost:5000;
-        proxy_http_version 1.1;
-        proxy_set_header   Upgrade $http_upgrade;
-        proxy_set_header   Connection keep-alive;
-        proxy_set_header   Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Proto $scheme;
-    }
-}
-``` 
-
-Check and apply the config file:
-Start lightswitcher, it will be accessible via Raspberry Pi IP on port 80.
-
-```bash
-sudo nginx -t
-sudo nginx -s reload
-```
+## Installing the Command Reader on Raspberry
 
 Publish the app first
 
 ```bash
-cd ~
-mkdir lightswitcher-source
-cd lightswitcher-source
-git clone https://github.com/savamura/lightSwitcher.git
-
-cd lightSwitcher/RaspberryPi/LightSwitcherServer/LightSwitcherWeb
+# lightswitcher source has been git-cloned before
+cd ~/lightswitcher-source/lightSwitcher/RaspberryPi/CloudCommandsReader/
 dotnet publish -c Release
 
-mkdir ~/lightswitcher
-mkdir ~/lightswitcher/server
-rsync -ar bin/Release/netcoreapp3.1/publish/* ~/lightswitcher/server
+mkdir ~/lightswitcher/command-reader-service
+rsync -ar bin/Release/netcoreapp3.1/publish/* ~/lightswitcher/command-reader-service
 
+# Create appsettings.Production.json and specify Google Cloud Storage Key file path
+cd ~/lightswitcher/command-reader-service
+cat appsettings.Development.json > appsettings.Production.json
+nano appsettings.Production.json
+
+# Change CloudCommandsReaderSettings.KeyFilePath to a key file location. For instance "~/lightswitcher/gcloud_service_account_key.json"
+
+```
+
+Copy key file from your local machine
+```bash
+scp gcloud_service_account_key.json pi@xxx.xxx.x.x:/home/pi/lightswitcher
 ```
 
 Make dotnet process auto-restart, create a systemd service.
 
 ```bash
-sudo nano /etc/systemd/system/lightswitcher.service
+sudo nano /etc/systemd/system/lightswitcher-commandreader.service
 ```
 
 With the following content:
 
 ```
 [Unit]
-Description=ASP.NET Core 3.0 App - LightSwitcherWeb
+Description=ASP.NET Core 3.0 App - LightSwitcher Command Reader Service
 
 [Service]
 # We can only use absolute path in systemd configuation
-WorkingDirectory=/home/pi/lightswitcher/server/
-ExecStart=/home/pi/dotnet/dotnet/dotnet /home/pi/lightswitcher/server/LightSwitcherWeb.dll
+WorkingDirectory=/home/pi/lightswitcher/command-reader-service/
+ExecStart=/home/pi/dotnet/dotnet/dotnet /home/pi/lightswitcher/command-reader-service/CloudCommandsReader.dll
 Restart=always
 # Restart service after 10 seconds if the dotnet service crashes:
 RestartSec=10
 KillSignal=SIGINT
-SyslogIdentifier=lightswitcher
+SyslogIdentifier=lightswitcher-command-reader
 User=pi
 Environment=ASPNETCORE_ENVIRONMENT=Production
 Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
@@ -134,7 +71,7 @@ WantedBy=multi-user.target
 Register and start the service:
 
 ```bash
-sudo systemctl enable lightswitcher.service
-sudo systemctl start lightswitcher.service
-sudo systemctl status lightswitcher.service
+sudo systemctl enable lightswitcher-commandreader.service
+sudo systemctl start lightswitcher-commandreader.service
+sudo systemctl status lightswitcher-commandreader.service
 ```
