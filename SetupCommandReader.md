@@ -74,4 +74,7 @@ Register and start the service:
 sudo systemctl enable lightswitcher-commandreader.service
 sudo systemctl start lightswitcher-commandreader.service
 sudo systemctl status lightswitcher-commandreader.service
+
+# to see service stdout
+sudo journalctl -u lightswitcher-commandreader.service
 ```
