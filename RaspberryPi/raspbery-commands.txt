@@ -2,18 +2,11 @@ https://medium.freecodecamp.org/how-to-make-your-own-python-dev-server-with-rasp
 1. login to pi
 ssh -R 52698:127.0.0.1:52698 pi@192.168.1.60
 
-sudo apt-get install python3-flask
-cd /var/www/
-sudo mkdir homeapi
-sudo chown -R pi homeapi
-touch app.py
-
 install rmate 
 https://github.com/aurora/rmate
 
 sudo wget -O /usr/local/bin/rmate https://raw.githubusercontent.com/aurora/rmate/master/rmate
 sudo chmod a+x /usr/local/bin/rmate
-
 
 rmate -p 52698 app.py
 
@@ -45,10 +38,6 @@ vncserver :1
 # goto server
 cd /var/www/homeapi
 rmate -p 52698 app.py
-
-# run flask app 
-
-export FLASK_APP=app.py
 
 https://gunicorn.org/
 
