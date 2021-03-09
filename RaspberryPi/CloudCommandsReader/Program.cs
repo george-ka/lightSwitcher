@@ -24,7 +24,7 @@ namespace CloudCommandsReader
                     services
                         .Configure<CloudCommandsReaderSettings>(hostContext.Configuration.GetSection("CloudCommandsReaderSettings"))
                         .Configure<CommandSenderSettings>(hostContext.Configuration.GetSection("CommandSenderSettings"))
-                        .AddSingleton<CloudStorageCommandReader>()
+                        .AddSingleton<CommandReader, CloudStorageCommandReader>()
                         .AddSingleton<CommandSender>()
                         .AddHttpClient()
                         .AddHostedService<Worker>();

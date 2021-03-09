@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace CloudCommandsReader
 {
-    public class CloudStorageCommandReader
+    public class CloudStorageCommandReader : ICommandReader
     {
         public CloudStorageCommandReader(
             IOptions<CloudCommandsReaderSettings> settingsOptions,
@@ -36,6 +36,7 @@ namespace CloudCommandsReader
             _commandFileNamePrefix = settings.CommandFileNamePrefix;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
         }
+
         public async Task<CommandResult> ReadCommandAsync()
         {
             var pagesEnumerable = _storageClient.ListObjectsAsync(_bucketName, _commandFileNamePrefix);
