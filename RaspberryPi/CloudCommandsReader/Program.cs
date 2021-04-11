@@ -20,11 +20,23 @@ namespace CloudCommandsReader
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    var section = hostContext.Configuration.GetSection("CloudCommandsReaderSettings");
+                    var commandReaderType = hostContext.Configuration.GetValue<string>("CommandReaderType");
+                    Console.WriteLine(commandReaderType);
+                    if (commandReaderType == "SiteCommandsReader")
+                    {
+                        services
+                            .Configure<SiteCommandReaderSettings>(hostContext.Configuration.GetSection("SiteCommandsReaderSettings"))
+                            .AddSingleton<ICommandReader, SiteCommandReader>();
+                    }
+                    else
+                    {
+                        services
+                            .Configure<CloudCommandsReaderSettings>(hostContext.Configuration.GetSection("CloudCommandsReaderSettings"))
+                            .AddSingleton<ICommandReader, CloudStorageCommandReader>();
+                    }
+
                     services
-                        .Configure<CloudCommandsReaderSettings>(hostContext.Configuration.GetSection("CloudCommandsReaderSettings"))
                         .Configure<CommandSenderSettings>(hostContext.Configuration.GetSection("CommandSenderSettings"))
-                        .AddSingleton<CommandReader, CloudStorageCommandReader>()
                         .AddSingleton<CommandSender>()
                         .AddHttpClient()
                         .AddHostedService<Worker>();

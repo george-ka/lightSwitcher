@@ -10,7 +10,7 @@ namespace CloudCommandsReader
     {
         public Worker(
             ILogger<Worker> logger,
-            CloudStorageCommandReader commandReader,
+            ICommandReader commandReader,
             CommandSender sender)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -56,7 +56,7 @@ namespace CloudCommandsReader
 
         private readonly ILogger<Worker> _logger;
 
-        private readonly CloudStorageCommandReader _commandReader;
+        private readonly ICommandReader _commandReader;
 
         private readonly CommandSender _sender;
     }
