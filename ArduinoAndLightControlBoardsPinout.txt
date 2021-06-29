@@ -22,7 +22,7 @@ GRD|●●|GRD
     --
 	
 	
-BOARD 1 				
+BOARD 1 
 	
 Ard |  Switch | Description        |
 uino|   ID    |                    |
@@ -43,11 +43,11 @@ Ard |  Switch | Description        |
 uino|   ID    |                    |
 PIN |         |                    |
 ____|_________|____________________|
-39  | 8       | none               |
+39  | 8       | Bed light left     |
 41  | 9       | none               |
 43  | 10      | Bathoom fan        |
 45  | 11      | Kitchen small spots|
 47  | 12      | Bed light right    |
-49  | 13      | Bed light left     |
+49  | 13      | doesn't work       |
 51  | 14      | Bedroom central    |
 53  | 15      | Wardrobe wire      |
