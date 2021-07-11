@@ -15,17 +15,17 @@ Each board consists of 8 switchers, there are two boards.
 
 The switcher circuit is based on MOC3041 datasheet sample:
 
-    Vcc           1 --------- 6     __                         HOT
-    +○--- Rin-----|         |-----|__|360Ω--⬤------⬤----------○
+    Vcc          1 _________ 6     __                         HOT
+    +○--- Rin-----|         |-----|__|360Ω--●------●-----------○
                  2|         |5              |      |          220V
     -○------------| MOC3041 |-○            (T2)   | |39Ω
                  3|         |4            [TRIAC] |_|   
-                ○-|         |-------⬤-GATE-/ |     |
-                   ---------        |       (T1)    |
-                                     _        |    ___
-                                    | |330Ω   |    ___0.01mF
-                                    |_|       |     |           N
-                                     |________⬤_____⬤--|LOAD|--○
+                ○-|_________|-------●-GATE-/ |     |
+                                    |       (T1)   |
+                                    ┴        |    ___
+                                   | |330Ω   |    ___0.01mF
+                                   |_|       |     |           N
+                                    |________●_____●--|LOAD|---○
                                      
 ## Tips
 Remove the capacitor and 39Ohm resistor if the light bulb is luminescent or starts binking.
