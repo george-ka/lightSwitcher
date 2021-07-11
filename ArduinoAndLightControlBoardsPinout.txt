@@ -33,7 +33,7 @@ ____|_________|____________________|
 27  | 2       | Balcony            |
 29  | 3       | LED 2 kitchen      |
 31  | 4       | Spot over table    |
-33  | 5       | ! Doesn't work     |
+33  | 5       | Doesn't work !     |
 35  | 6       | Entrance, Hall     |
 37  | 7       | Kitchen bright spot|
 
@@ -48,6 +48,6 @@ ____|_________|____________________|
 43  | 10      | Bathoom fan        |
 45  | 11      | Kitchen small spots|
 47  | 12      | Bed light right    |
-49  | 13      | doesn't work       |
+49  | 13      | Entrance hall back |
 51  | 14      | Bedroom central    |
 53  | 15      | Wardrobe wire      |
