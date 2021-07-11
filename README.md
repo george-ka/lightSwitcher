@@ -5,10 +5,10 @@ This project helps me to contol home lights.
 
 It consists of tree major parts:
 1. Physical circuit board with relays
-2. Arduino Mega board which controls the relays
+2. Arduino Mega board which controls the switchers (based on Triacs)
 3. Raspberry PI with a server to contol Arduino
 
-Relays board description will come later.
+Switcher board description can be found [here](SwitcherBoard.md).
 
 You will find Arduino scetch in the [ArduinoLightSwitcher](./ArduinoLightSwitcher/ArduinoLightSwitcher.ino) directory
 
